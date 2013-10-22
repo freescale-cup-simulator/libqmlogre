@@ -11,6 +11,7 @@ set(HDR
     abstract_node.h
     controlled_node.h
     image_node.h
+    shared_image.h
 )
 
 set(SRC
@@ -20,6 +21,7 @@ set(SRC
     abstract_node.cc
     controlled_node.cc
     image_node.cc
+    shared_image.cc
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Os -ggdb3 -Wextra")

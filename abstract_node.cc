@@ -1,3 +1,8 @@
+
+#include <RenderSystems/GL/OgreGLTexture.h>
+#include <RenderSystems/GL/OgreGLFrameBufferObject.h>
+#include <RenderSystems/GL/OgreGLFBORenderTexture.h>
+
 #include <abstract_node.h>
 
 

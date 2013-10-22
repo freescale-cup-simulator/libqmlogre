@@ -20,6 +20,9 @@ public:
     Ogre::Camera * get();
     OgreBites::SdkCameraMan * getCameraController();
 
+public slots:
+    void onKeyPressed(Qt::Key key);
+    void onKeyReleased(Qt::Key key);
 private:
 
     Ogre::Camera * m_camera;

@@ -20,6 +20,16 @@ CameraGrabber::CameraGrabber(QQuickItem *parent)
     startTimer(16);
 }
 
+CameraGrabber::CameraGrabber(OgreEngine *engine, Camera *camera, SharedImage *shared_image_buffer, QQuickItem *parent)
+    : QQuickItem(parent)
+    , m_timerID(0)
+    , m_camera(camera)
+    , m_ogreEngineItem(engine)
+    , m_shared_image(shared_image_buffer)
+{
+
+}
+
 CameraGrabber::~CameraGrabber()
 {
 
@@ -38,16 +48,16 @@ QSGNode *CameraGrabber::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     }
 
     AbstractNode *node = static_cast<AbstractNode *>(oldNode);
+    Q_ASSERT(m_shared_image);
     if (!node)
     {
         if(m_camera->getCameraController())
             node=new ControlledNode(m_ogreEngineItem,m_camera);
         else
-            node=new ImageNode(m_ogreEngineItem,m_camera);
+            node=new ImageNode(m_ogreEngineItem,m_camera,m_shared_image);
     }
     node->setSize(QSize(width(), height()));
     node->update();
-
     // mark texture dirty, otherwise Qt will not trigger a redraw (preprocess())
     node->markDirty(QSGNode::DirtyMaterial);
     return node;
@@ -73,4 +83,14 @@ void CameraGrabber::setCamera(QObject *camera)
 void CameraGrabber::setOgreEngine(OgreEngine *ogreEngine)
 {
     m_ogreEngineItem = ogreEngine;
+}
+
+SharedImage *CameraGrabber::sharedImage() const
+{
+    return m_shared_image;
+}
+
+void CameraGrabber::setSharedImage(SharedImage *img)
+{
+    m_shared_image=img;
 }

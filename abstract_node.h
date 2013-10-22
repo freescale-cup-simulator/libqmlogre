@@ -1,10 +1,6 @@
 #ifndef ABSTRACTNODE_H
 #define ABSTRACTNODE_H
 
-#include <RenderSystems/GL/OgreGLTexture.h>
-#include <RenderSystems/GL/OgreGLFrameBufferObject.h>
-#include <RenderSystems/GL/OgreGLFBORenderTexture.h>
-
 #include <QtQuick/QSGGeometryNode>
 #include <QtQuick/QSGTextureMaterial>
 #include <QtQuick/QSGOpaqueTextureMaterial>

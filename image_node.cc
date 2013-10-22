@@ -1,14 +1,39 @@
+#include <RenderSystems/GL/OgreGLTexture.h>
+#include <RenderSystems/GL/OgreGLFrameBufferObject.h>
+#include <RenderSystems/GL/OgreGLFBORenderTexture.h>
+
 #include <image_node.h>
 
-ImageNode::ImageNode(OgreEngine *engine, Camera *cameraObj)
+ImageNode::ImageNode(OgreEngine *engine, Camera *cameraObj, SharedImage *sharedImage)
+    : m_shared_image(sharedImage)
 {
     this->m_camera=cameraObj->get();
     this->m_ogreEngineItem=engine;
+}
+
+ImageNode::~ImageNode()
+{
+
 }
 
 void ImageNode::preprocess()
 {
     activateOgreContext();
     m_renderTarget->update(true);
+
+    // Hardware Buffer for the texture
+    Ogre::HardwarePixelBufferSharedPtr pixelBuffer = m_rttTexture->getBuffer();
+    // Make a variable for the pixel box (used as a pointer
+    Ogre::Image::Box pixelBox;
+    pixelBuffer->lock(pixelBox,Ogre::HardwareBuffer::HBL_NORMAL);
+    const Ogre::PixelBox &pixBox  = pixelBuffer->getCurrentLock();
+    Ogre::uint8* pDest = static_cast<Ogre::uint8*>(pixBox.data);
+    if(m_shared_image->size()!=m_size)
+        m_shared_image->realloc(m_size);
+    quint8 * im_data=m_shared_image->lock();
+    memcpy(im_data,pDest,m_size.width()*m_size.height()*4);
+    m_shared_image->unlock();
+
     doneOgreContext();
 }
+
