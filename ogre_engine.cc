@@ -20,16 +20,17 @@ OgreEngine::OgreEngine(QQuickWindow *window)
 OgreEngine::~OgreEngine()
 {
     delete m_ogreContext;
-    delete m_log_manager;
+    if(m_log_manager)
+        delete m_log_manager;
 }
 
-Ogre::Root* OgreEngine::startEngine()
+Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
 {
     activateOgreContext();
-    m_log_manager=new Ogre::LogManager();
-    m_log_manager->createLog(LOG_FILE_NAME,true,false,false);
+    //m_log_manager=new Ogre::LogManager();
+    //m_log_manager->createLog(LOG_FILE_NAME,true,false,false);
 
-    Ogre::Root *ogreRoot = new Ogre::Root(RESOURCES_DIR);
+    Ogre::Root *ogreRoot = new Ogre::Root(plugins_config_directory);
 
     Ogre::RenderSystem *renderSystem = ogreRoot->getRenderSystemByName(RENDER_SYSTEM_NAME);
     ogreRoot->setRenderSystem(renderSystem);

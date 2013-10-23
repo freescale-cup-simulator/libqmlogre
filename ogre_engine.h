@@ -13,7 +13,6 @@
 #include <OgreRenderTarget.h>
 #include <OgreRenderWindow.h>
 
-#define RESOURCES_DIR "./resources/plugins.cfg"
 #define LOG_FILE_NAME "mylog.txt"
 #define RENDER_SYSTEM_NAME "OpenGL Rendering Subsystem"
 #define WINDOW_NAME "OgreWindow"
@@ -32,7 +31,7 @@ public:
     OgreEngine(QQuickWindow *window = 0);
     ~OgreEngine();
 
-    Ogre::Root * startEngine();
+    Ogre::Root * startEngine(Ogre::String plugins_config_directory);
     void stopEngine(Ogre::Root *ogreRoot);
 
     void activateOgreContext();

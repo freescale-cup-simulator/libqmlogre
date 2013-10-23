@@ -48,13 +48,16 @@ QSGNode *CameraGrabber::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
     }
 
     AbstractNode *node = static_cast<AbstractNode *>(oldNode);
-    Q_ASSERT(m_shared_image);
+    //
     if (!node)
     {
         if(m_camera->getCameraController())
             node=new ControlledNode(m_ogreEngineItem,m_camera);
         else
+        {
+            Q_ASSERT(m_shared_image);
             node=new ImageNode(m_ogreEngineItem,m_camera,m_shared_image);
+        }
     }
     node->setSize(QSize(width(), height()));
     node->update();
