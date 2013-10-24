@@ -18,6 +18,12 @@ Camera::Camera(Ogre::Camera *ogreCam, OgreBites::SdkCameraMan *cameraMan, QObjec
 
 }
 
+Camera::~Camera()
+{
+    if(m_camera_controller)
+        delete m_camera_controller;
+}
+
 Ogre::Camera *Camera::get()
 {
     return m_camera;

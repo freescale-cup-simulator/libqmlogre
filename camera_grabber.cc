@@ -27,7 +27,11 @@ CameraGrabber::CameraGrabber(OgreEngine *engine, Camera *camera, SharedImage *sh
     , m_ogreEngineItem(engine)
     , m_shared_image(shared_image_buffer)
 {
-
+    setFlag(ItemHasContents);
+    setSmooth(false);
+    startTimer(16);
+    //m_shared_image->setParent(this);
+    //m_camera->setParent(this);
 }
 
 CameraGrabber::~CameraGrabber()
@@ -57,6 +61,7 @@ QSGNode *CameraGrabber::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         {
             Q_ASSERT(m_shared_image);
             node=new ImageNode(m_ogreEngineItem,m_camera,m_shared_image);
+            qDebug()<<"Element size: "<<QSize(width(), height());
         }
     }
     node->setSize(QSize(width(), height()));
@@ -81,6 +86,7 @@ void CameraGrabber::setCamera(QObject *camera)
 {
     m_camera = qobject_cast<Camera*>(camera);
     this->setObjectName("CameraGrabber::"+m_camera->objectName());
+    //m_camera->setParent(this);
 }
 
 void CameraGrabber::setOgreEngine(OgreEngine *ogreEngine)

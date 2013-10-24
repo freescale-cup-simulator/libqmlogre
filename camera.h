@@ -16,6 +16,7 @@ public:
 
     Camera(Ogre::Camera * ogreCam,QObject *parent = 0);
     Camera(Ogre::Camera * ogreCam,OgreBites::SdkCameraMan * cameraMan,QObject *parent = 0);
+    ~Camera();
 
     Ogre::Camera * get();
     OgreBites::SdkCameraMan * getCameraController();
