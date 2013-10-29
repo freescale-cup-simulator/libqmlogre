@@ -1,11 +1,11 @@
 #include <shared_image.h>
 
 
-SharedImage::SharedImage(QObject *parent)
+SharedImage::SharedImage(QSemaphore *sync, QObject *parent)
     : QObject(parent)
     , m_data(0)
+    , m_cameras_syncronizator(sync)
 {
-    m_empty_mutex.lock();
 }
 
 SharedImage::~SharedImage()
@@ -36,6 +36,7 @@ void SharedImage::realloc(QSize size)
 quint8 *SharedImage::lock()
 {
     m_mutex.lock();
+    m_cameras_syncronizator->tryAcquire(1);
     return m_data;
 }
 
@@ -43,11 +44,12 @@ quint8 *SharedImage::tryLock()
 {
     if(!m_mutex.tryLock())
         return 0;
+    m_cameras_syncronizator->tryAcquire(1);
     return m_data;
 }
 
 void SharedImage::unlock()
 {
+    m_cameras_syncronizator->release(1);
     m_mutex.unlock();
-    m_empty_mutex.unlock();
 }

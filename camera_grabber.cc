@@ -17,7 +17,7 @@ CameraGrabber::CameraGrabber(QQuickItem *parent)
 {
     setFlag(ItemHasContents);
     setSmooth(false);
-    startTimer(16);
+    startTimer(0);
 }
 
 CameraGrabber::CameraGrabber(OgreEngine *engine, Camera *camera, SharedImage *shared_image_buffer, QQuickItem *parent)
@@ -39,7 +39,7 @@ CameraGrabber::~CameraGrabber()
 
 }
 
-QObject * CameraGrabber::camera() const
+QObject *CameraGrabber::camera() const
 {
     return qobject_cast<QObject *>(m_camera);
 }
@@ -94,12 +94,12 @@ void CameraGrabber::setOgreEngine(OgreEngine *ogreEngine)
     m_ogreEngineItem = ogreEngine;
 }
 
-SharedImage *CameraGrabber::sharedImage() const
+QObject *CameraGrabber::sharedImage() const
 {
-    return m_shared_image;
+    return qobject_cast<QObject *>(m_shared_image);
 }
 
-void CameraGrabber::setSharedImage(SharedImage *img)
+void CameraGrabber::setSharedImage(QObject *img)
 {
-    m_shared_image=img;
+    m_shared_image=qobject_cast<SharedImage *>(img);
 }

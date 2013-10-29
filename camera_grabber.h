@@ -29,7 +29,7 @@ class CameraGrabber : public QQuickItem
 
     Q_PROPERTY(QObject * camera READ camera WRITE setCamera)
     Q_PROPERTY(OgreEngine * ogreEngine READ ogreEngine WRITE setOgreEngine)
-    Q_PROPERTY(SharedImage * sharedImage READ sharedImage WRITE setSharedImage)
+    Q_PROPERTY(QObject * sharedImage READ sharedImage WRITE setSharedImage)
 
 public:
     CameraGrabber(QQuickItem *parent = 0);
@@ -43,8 +43,8 @@ public:
     OgreEngine * ogreEngine() const { return m_ogreEngineItem; }
     void setOgreEngine(OgreEngine * ogreEngine);
 
-    SharedImage * sharedImage() const;
-    void setSharedImage(SharedImage * img);
+    QObject * sharedImage() const;
+    void setSharedImage(QObject * img);
 
 protected:
 
