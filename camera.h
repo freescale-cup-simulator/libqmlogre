@@ -24,6 +24,7 @@ public:
 public slots:
     void onKeyPressed(Qt::Key key);
     void onKeyReleased(Qt::Key key);
+    void onMouseMove(qreal mouseX, qreal mouseY);
 private:
 
     Ogre::Camera * m_camera;

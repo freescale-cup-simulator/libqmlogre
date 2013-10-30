@@ -85,3 +85,16 @@ void Camera::onKeyReleased(Qt::Key key)
     OIS::KeyEvent evt(0,code,code);
     m_camera_controller->injectKeyUp(evt);
 }
+
+void Camera::onMouseMove(qreal mouseX, qreal mouseY)
+{
+    if(!m_camera_controller)
+        return;
+    OIS::MouseState ms;
+    ms.X.abs=mouseX;
+    ms.X.rel=mouseX;
+    ms.Y.abs=mouseY;
+    ms.Y.rel=mouseY;
+    OIS::MouseEvent evt(0,ms);
+    m_camera_controller->injectMouseMove(evt);
+}

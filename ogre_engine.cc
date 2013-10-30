@@ -40,6 +40,7 @@ Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
 
     params["externalGLControl"] = "true";
     params["currentGLContext"] = "true";
+    //params["FSAA"]="8";
 
     //Finally create our window.
     m_ogreWindow = ogreRoot->createRenderWindow(WINDOW_NAME, 1, 1, false, &params);

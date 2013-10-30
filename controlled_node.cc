@@ -16,7 +16,7 @@ ControlledNode::ControlledNode(OgreEngine *engine, Camera *cameraObj)
 void ControlledNode::update()
 {
     qint64 time=m_timer.restart();
-    m_evt.timeSinceLastFrame=(double) time/2200;
+    m_evt.timeSinceLastFrame=(float) time/2020;
 
     if(m_camera_man)
         m_camera_man->frameRenderingQueued(m_evt);
