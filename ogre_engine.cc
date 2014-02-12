@@ -33,6 +33,15 @@ Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
     Ogre::Root *ogreRoot = new Ogre::Root(plugins_config_directory);
 
     Ogre::RenderSystem *renderSystem = ogreRoot->getRenderSystemByName(RENDER_SYSTEM_NAME);
+    Ogre::ConfigOptionMap config=renderSystem->getConfigOptions();
+    Ogre::StringVector::const_iterator it=config.at("FSAA").possibleValues.cbegin();
+    qDebug()<<"Available anti-aliasing options:";
+    while(it!=config.at("FSAA").possibleValues.cend())
+    {
+        qDebug()<<"FSAA:"<<it->c_str();
+        it++;
+    }
+
     ogreRoot->setRenderSystem(renderSystem);
     ogreRoot->initialise(false);
 
@@ -73,7 +82,13 @@ void OgreEngine::setQuickWindow(QQuickWindow *window)
 
     // create a new shared OpenGL context to be used exclusively by Ogre
     m_ogreContext = new QOpenGLContext();
-    m_ogreContext->setFormat(m_quickWindow->requestedFormat());
+
+    // anti-aliasing
+    QSurfaceFormat format=m_quickWindow->requestedFormat();
+    format.setSamples(8);
+    m_quickWindow->setFormat(format);
+    m_ogreContext->setFormat(format);
+
     m_ogreContext->setShareContext(m_qtContext);
     m_ogreContext->create();
 }

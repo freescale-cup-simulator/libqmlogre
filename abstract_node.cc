@@ -66,7 +66,7 @@ void AbstractNode::updateFBO()
         Ogre::TextureManager::getSingleton().remove(m_camera->getName());
     //qDebug()<<"UpdateFBO "<<m_camera->getName().c_str();
     int samples = m_ogreEngineItem->ogreContext()->format().samples();
-
+    //qDebug()<<"FBO samples:"<<samples;
     m_rttTexture = Ogre::TextureManager::getSingleton().createManual(m_camera->getName(),
                                                                      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                                      Ogre::TEX_TYPE_2D,
