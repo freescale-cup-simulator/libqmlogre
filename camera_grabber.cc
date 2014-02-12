@@ -20,20 +20,6 @@ CameraGrabber::CameraGrabber(QQuickItem *parent)
     startTimer(0);
 }
 
-CameraGrabber::CameraGrabber(OgreEngine *engine, Camera *camera, SharedImage *shared_image_buffer, QQuickItem *parent)
-    : QQuickItem(parent)
-    , m_timerID(0)
-    , m_camera(camera)
-    , m_ogreEngineItem(engine)
-    , m_shared_image(shared_image_buffer)
-{
-    setFlag(ItemHasContents);
-    setSmooth(false);
-    startTimer(16);
-    //m_shared_image->setParent(this);
-    //m_camera->setParent(this);
-}
-
 CameraGrabber::~CameraGrabber()
 {
 
@@ -60,11 +46,7 @@ QSGNode *CameraGrabber::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
         if(m_camera->getCameraController())
             node=new ControlledNode(m_ogreEngineItem,m_camera);
         else
-        {
-            //Q_ASSERT(m_shared_image);
-            node=new ImageNode(m_ogreEngineItem,m_camera,m_shared_image);
-            qDebug()<<"Element size: "<<QSize(width(), height());
-        }
+            return 0;
     }
     node->setSize(QSize(width(), height()));
     node->update();
@@ -94,14 +76,4 @@ void CameraGrabber::setCamera(QObject *camera)
 void CameraGrabber::setOgreEngine(OgreEngine *ogreEngine)
 {
     m_ogreEngineItem = ogreEngine;
-}
-
-QObject *CameraGrabber::sharedImage() const
-{
-    return qobject_cast<QObject *>(m_shared_image);
-}
-
-void CameraGrabber::setSharedImage(QObject *img)
-{
-    m_shared_image=qobject_cast<SharedImage *>(img);
 }

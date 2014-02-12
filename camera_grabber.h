@@ -18,10 +18,8 @@
 
 
 #include <controlled_node.h>
-#include <image_node.h>
 #include <ogre_engine.h>
 #include <camera.h>
-#include <shared_image.h>
 
 class CameraGrabber : public QQuickItem
 {
@@ -29,11 +27,9 @@ class CameraGrabber : public QQuickItem
 
     Q_PROPERTY(QObject * camera READ camera WRITE setCamera)
     Q_PROPERTY(OgreEngine * ogreEngine READ ogreEngine WRITE setOgreEngine)
-    Q_PROPERTY(QObject * sharedImage READ sharedImage WRITE setSharedImage)
 
 public:
     CameraGrabber(QQuickItem *parent = 0);
-    CameraGrabber(OgreEngine * engine, Camera * camera, SharedImage * shared_image_buffer, QQuickItem *parent = 0);
 
     ~CameraGrabber();
 
@@ -42,9 +38,6 @@ public:
 
     OgreEngine * ogreEngine() const { return m_ogreEngineItem; }
     void setOgreEngine(OgreEngine * ogreEngine);
-
-    QObject * sharedImage() const;
-    void setSharedImage(QObject * img);
 
 protected:
 
@@ -58,7 +51,6 @@ private:
     int m_timerID;
     Camera *m_camera;
     OgreEngine *m_ogreEngineItem;
-    SharedImage * m_shared_image;
 
 };
 

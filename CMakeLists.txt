@@ -10,8 +10,6 @@ set(HDR
     camera.h
     abstract_node.h
     controlled_node.h
-    image_node.h
-    shared_image.h
 )
 
 set(SRC
@@ -20,8 +18,6 @@ set(SRC
     camera.cc
     abstract_node.cc
     controlled_node.cc
-    image_node.cc
-    shared_image.cc
 )
 
 find_package(OpenGL REQUIRED)
