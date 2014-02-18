@@ -43,10 +43,10 @@ QSGNode *CameraGrabber::updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *)
 
     if (!node)
     {
-        if(m_camera->getCameraController())
+        //if(m_camera->getCameraController())
             node=new ControlledNode(m_ogreEngineItem,m_camera);
-        else
-            return 0;
+        //else
+        //    return 0;
     }
     node->setSize(QSize(width(), height()));
     node->update();
