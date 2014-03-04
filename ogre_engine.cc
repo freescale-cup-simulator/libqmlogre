@@ -12,6 +12,7 @@
 OgreEngine::OgreEngine(QQuickWindow *window)
     : QObject()
     , m_log_manager(0)
+    , m_root(0)
 {
     qmlRegisterType<OgreEngine>("OgreEngine", 1, 0, "OgreEngine");
     setQuickWindow(window);
@@ -57,13 +58,13 @@ Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
     m_ogreWindow->update(false);
 
     doneOgreContext();
-
+    m_root=ogreRoot;
     return ogreRoot;
 }
 
-void OgreEngine::stopEngine(Ogre::Root *ogreRoot)
+void OgreEngine::stopEngine()
 {
-    if (ogreRoot) {
+    if (m_root) {
 
         //m_root->detachRenderTarget(m_renderTexture);
         // TODO tell node(s) to detach
