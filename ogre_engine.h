@@ -31,9 +31,10 @@ public:
     OgreEngine(QQuickWindow *window = 0);
     ~OgreEngine();
 
-    Ogre::Root * startEngine(Ogre::String plugins_config_directory);
+    Ogre::Root * startEngine(Ogre::String resources_directory,Ogre::String plugins_config_directory);
     void stopEngine();
     inline Ogre::Root * ogreRoot(){return m_root;}
+    inline Ogre::SceneManager * sceneManager(){return m_scene_manager;}
 
     void activateOgreContext();
     void doneOgreContext();
@@ -58,6 +59,7 @@ private:
     void loadOgrePlugin(Ogre::Root *ogreRoot, const QString &name);
 
     Ogre::Root * m_root;
+    Ogre::SceneManager * m_scene_manager;
 protected:
     void setQuickWindow(QQuickWindow *window);
 };

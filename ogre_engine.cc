@@ -25,7 +25,7 @@ OgreEngine::~OgreEngine()
         delete m_log_manager;
 }
 
-Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
+Ogre::Root* OgreEngine::startEngine(Ogre::String resources_directory,Ogre::String plugins_config_directory)
 {
     activateOgreContext();
     //m_log_manager=new Ogre::LogManager();
@@ -57,6 +57,18 @@ Ogre::Root* OgreEngine::startEngine(Ogre::String plugins_config_directory)
     m_ogreWindow->setVisible(false);
     m_ogreWindow->update(false);
 
+    Ogre::ResourceGroupManager & rm = Ogre::ResourceGroupManager::getSingleton();
+    rm.addResourceLocation(resources_directory+"materials", "FileSystem");
+    rm.addResourceLocation(resources_directory+"meshes", "FileSystem");
+    rm.initialiseAllResourceGroups();
+    Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
+    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(4);
+
+
+    m_scene_manager = ogreRoot->createSceneManager(Ogre::ST_GENERIC, "SceneManager");
+    m_scene_manager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+    m_scene_manager->setAmbientLight(Ogre::ColourValue(255, 255, 255));
+
     doneOgreContext();
     m_root=ogreRoot;
     return ogreRoot;
@@ -71,7 +83,7 @@ void OgreEngine::stopEngine()
 
     }
 
-    delete ogreRoot;
+    delete m_root;
 }
 
 void OgreEngine::setQuickWindow(QQuickWindow *window)
